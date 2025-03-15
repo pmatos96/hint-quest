@@ -3,6 +3,7 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import { Box, Container, containerClasses } from "@mui/material";
 
 export const metadata: Metadata = {
   title: "Hint Quest App",
@@ -16,7 +17,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body style={{ padding: 0, margin: 0 }}>{children}</body>
+      <body style={{ padding: 0, margin: 0 }}>
+        <Box
+          sx={{
+            width: "100vw",
+            height: "100vh",
+            backgroundColor: "powderblue",
+            paddingLeft: 0,
+            paddingRight: 0,
+          }}
+        >
+          {children}
+        </Box>
+      </body>
     </html>
   );
 }
