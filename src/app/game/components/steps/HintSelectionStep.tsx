@@ -5,7 +5,8 @@ import PetsIcon from "@mui/icons-material/Pets";
 import FlagIcon from "@mui/icons-material/Flag";
 import { GameCategory } from "@/hooks/useManageLocalStorage";
 import { Box, Button } from "@mui/material";
-import HintsBoard from "../HintsBoard";
+import Grid from "@mui/material/Grid2";
+import useManageHints from "@/hooks/useManageHints";
 
 const GAME_CATEGORIES_MAP: Record<GameCategory, { label: string; icon: React.ReactNode }> = {
   famousPerson: {
@@ -36,6 +37,7 @@ interface IHintSelectionStep {
 }
 
 const HintSelectionStep = ({ gameCategory, onRestart }: IHintSelectionStep) => {
+  const { hints, setHintUsed, resetHints } = useManageHints();
   return (
     <>
       <Button
@@ -47,9 +49,30 @@ const HintSelectionStep = ({ gameCategory, onRestart }: IHintSelectionStep) => {
         {GAME_CATEGORIES_MAP[gameCategory as GameCategory].label}
       </Button>
       <Box display="flex" justifyContent="center" width={"100%"}>
-        <HintsBoard />
+        <Grid width={320} container rowSpacing={2} columnSpacing={2}>
+          {hints.map((hint, index) => (
+            <Grid>
+              <Button
+                disabled={hint.isUsed}
+                variant="contained"
+                color="secondary"
+                key={hint.id}
+                onClick={() => setHintUsed(hint.id)}
+              >
+                {index}
+              </Button>
+            </Grid>
+          ))}
+        </Grid>
       </Box>
-      <Button variant="contained" color="secondary" onClick={onRestart}>
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={async () => {
+          await resetHints();
+          onRestart();
+        }}
+      >
         Restart
       </Button>
     </>
