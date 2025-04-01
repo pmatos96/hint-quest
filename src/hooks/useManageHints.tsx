@@ -2,7 +2,7 @@
 import { defaultHints as defaultHintsMock } from "@/app/temporary/data";
 import { useState, useEffect } from "react";
 
-interface IHint {
+export interface IHint {
   id: number;
   hint: string;
   isUsed: boolean;
@@ -15,6 +15,7 @@ const useManageHints = () => {
     const storedHints = localStorage.getItem("hints");
     return storedHints ? JSON.parse(storedHints) : [];
   });
+  const [selectedHint, setSelectedHint] = useState<IHint | null>(null);
 
   const resetHints = () => {
     setHints(defaultHints); // TODO - Remove this once the API is ready
@@ -22,6 +23,13 @@ const useManageHints = () => {
 
   const setHintUsed = (id: number) => {
     setHints((prevHints) => prevHints.map((hint) => (hint.id === id ? { ...hint, isUsed: true } : hint)));
+  };
+
+  const selectHint = (id: number) => {
+    const hint = hints.find((hint) => hint.id === id);
+    if (hint) {
+      setSelectedHint(hint);
+    }
   };
 
   useEffect(() => {
@@ -39,6 +47,8 @@ const useManageHints = () => {
     setHints,
     setHintUsed,
     resetHints,
+    selectHint,
+    selectedHint,
   };
 };
 

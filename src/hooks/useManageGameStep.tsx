@@ -4,6 +4,7 @@ import { useState } from "react";
 interface IUseManageGameStep {
   currentStep: number;
   goToNextStep: () => void;
+  goToPreviousStep: () => void;
   restartSteps: () => void;
 }
 
@@ -26,12 +27,20 @@ const useManageGameStep = (): IUseManageGameStep => {
     setCurrentStep(nextStep);
   };
 
+  const goToPreviousStep = () => {
+    const previousStep = currentStep - 1;
+    if (previousStep >= 0) {
+      localStorage.setItem("currentStep", previousStep.toString());
+      setCurrentStep(previousStep);
+    }
+  };
+
   const restartSteps = () => {
     localStorage.setItem("currentStep", "0");
     setCurrentStep(0);
   };
 
-  return { currentStep, goToNextStep, restartSteps };
+  return { currentStep, goToNextStep, goToPreviousStep, restartSteps };
 };
 
 export default useManageGameStep;
