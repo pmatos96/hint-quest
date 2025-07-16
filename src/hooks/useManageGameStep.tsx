@@ -3,7 +3,7 @@ import { useState } from "react";
 
 interface IUseManageGameStep {
   currentStep: number;
-  goToNextStep: () => void;
+  goToNextStep: (step?: number) => void;
   goToPreviousStep: () => void;
   restartSteps: () => void;
 }
@@ -21,8 +21,8 @@ const useManageGameStep = (): IUseManageGameStep => {
     return getSanitizedStoredStep() || 0;
   });
 
-  const goToNextStep = () => {
-    const nextStep = currentStep + 1;
+  const goToNextStep = (step?: number) => {
+    const nextStep = step || currentStep + 1;
     localStorage.setItem("currentStep", nextStep.toString());
     setCurrentStep(nextStep);
   };

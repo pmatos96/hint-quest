@@ -7,6 +7,16 @@ import CategorySelectionStep from "./components/steps/CategorySelectionStep";
 import HintSelectionStep from "./components/steps/HintSelectionStep";
 import GuessStep from "./components/steps/GuessStep";
 import useManageHints from "@/hooks/useManageHints";
+import WinnerStep from "./components/steps/WinnerStep";
+import GameOverStep from "./components/steps/GameOverStep";
+
+const GAME_STEPS = {
+  CATEGORY_SELECTION: 0,
+  HINT_SELECTION: 1,
+  GUESS: 2,
+  WINNER: 3,
+  GAME_OVER: 4,
+};
 
 export default function Game() {
   const { gameCategory, setGameCategory, gameTarget, fetchGameTarget, setGameTarget } = useGameData();
@@ -23,6 +33,12 @@ export default function Game() {
     }
   };
 
+  const restartGame = async () => {
+    await resetHints();
+    setGameTarget(null);
+    restartSteps();
+  }
+
   useEffect(() => {
     if (gameHasStarted) {
       if (!gameTarget) {
@@ -33,7 +49,7 @@ export default function Game() {
 
   const renderStep = () => {
     switch (currentStep) {
-      case 0:
+      case GAME_STEPS.CATEGORY_SELECTION:
         return (
           <CategorySelectionStep
             onSetCategory={(category) => {
@@ -42,7 +58,7 @@ export default function Game() {
             }}
           />
         );
-      case 1:
+      case GAME_STEPS.HINT_SELECTION:
         return (
           <HintSelectionStep
             hints={hints}
@@ -51,18 +67,17 @@ export default function Game() {
               selectHint(id);
               goToNextStep();
             }}
+            onOutOfHints={() => goToNextStep(GAME_STEPS.GAME_OVER)}
             gameCategory={gameCategory}
-            onRestart={async () => {
-              await resetHints();
-              setGameTarget(null);
-              restartSteps();
-            }}
+            onRestart={restartGame}
           />
         );
-      case 2:
+      case GAME_STEPS.GUESS:
         return <GuessStep onSubmitGuess={verifyGuess} hintText={selectedHint?.hint!} />;
-      case 3:
-        return <h1>You won!</h1>;
+      case GAME_STEPS.WINNER:
+        return <WinnerStep onRestart={restartGame} />;
+      case GAME_STEPS.GAME_OVER:
+        return <GameOverStep onRestart={restartGame} target={gameTarget!} />;
       default:
         return null;
     }

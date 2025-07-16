@@ -7,6 +7,7 @@ import { GameCategory } from "@/hooks/useGameData";
 import { Box, Button } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import useManageHints, { IHint } from "@/hooks/useManageHints";
+import { useEffect } from "react";
 
 const GAME_CATEGORIES_MAP: Record<GameCategory, { label: string; icon: React.ReactNode }> = {
   famousPerson: {
@@ -36,9 +37,18 @@ interface IHintSelectionStep {
   onRestart: () => void;
   hints: IHint[];
   onSelectHint: (id: number) => void;
+  onOutOfHints: () => void;
 }
 
-const HintSelectionStep = ({ gameCategory, onRestart, hints, onSelectHint }: IHintSelectionStep) => {
+const HintSelectionStep = ({ gameCategory, onRestart, hints, onSelectHint, onOutOfHints }: IHintSelectionStep) => {
+
+  useEffect(() => {
+    console.log("Hints updated:", hints);
+    if (hints.every(hint => hint.isUsed)) {
+      onOutOfHints();
+    }
+  }, [hints, onOutOfHints]);
+
   return (
     <>
       <Button
