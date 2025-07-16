@@ -15,7 +15,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   // const target = chat.choices[0].message.content?.trim();
 
   const TARGET_BY_CATEGORY: Record<GameCategory, string[]> = {
-    famousPerson: ["Harry Potter", "Albert Einstein", "Marie Curie", "Isaac Newton", "Leonardo da Vinci"],
+    famousPerson: ["Queen Elizabeth II", "Albert Einstein", "Marie Curie", "Isaac Newton", "Leonardo da Vinci"],
     word: ["apple", "banana", "cherry", "date", "elderberry"],
     movie: ["Inception", "Titanic", "Avatar", "The Matrix", "The Godfather"],
     animal: ["dog", "cat", "elephant", "giraffe", "lion"],

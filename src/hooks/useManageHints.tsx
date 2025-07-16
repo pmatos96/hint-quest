@@ -1,6 +1,7 @@
 "use client";
 import { defaultHints as defaultHintsMock } from "@/app/temporary/data";
 import { useState, useEffect } from "react";
+import useGameData from "./useGameData";
 
 export interface IHint {
   id: number;
@@ -20,6 +21,9 @@ interface IUseManageHints {
 const defaultHints = defaultHintsMock; // TODO - Remove this once the API is ready
 
 const useManageHints = (): IUseManageHints => {
+
+  const { gameCategory } = useGameData();
+
   const [hints, setHints] = useState<IHint[]>(() => {
     const storedHints = localStorage.getItem("hints");
     return storedHints ? JSON.parse(storedHints) : [];
@@ -27,7 +31,8 @@ const useManageHints = (): IUseManageHints => {
   const [selectedHint, setSelectedHint] = useState<IHint | null>(null);
 
   const resetHints = () => {
-    setHints(defaultHints); // TODO - Remove this once the API is ready
+    const obtainedHints = gameCategory ? defaultHints[gameCategory] : [];
+    setHints(obtainedHints); // TODO - Remove this once the API is ready
   };
 
   const setHintUsed = (id: number) => {
@@ -47,7 +52,8 @@ const useManageHints = (): IUseManageHints => {
 
   useEffect(() => {
     if (hints?.length === 0) {
-      setHints(defaultHints); // TODO - Remove this once the API is ready
+      const obtainedHints = gameCategory ? defaultHints[gameCategory] : [];
+      setHints(obtainedHints); // TODO - Remove this once the API is ready
     }
   }, []);
 

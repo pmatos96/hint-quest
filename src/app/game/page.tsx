@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import useGameData from "@/hooks/useGameData";
+import useGameData, { GameCategory } from "@/hooks/useGameData";
 import { Stack } from "@mui/material";
 import useManageGameStep from "@/hooks/useManageGameStep";
 import CategorySelectionStep from "./components/steps/CategorySelectionStep";
@@ -23,7 +23,7 @@ export default function Game() {
   const { currentStep, goToNextStep, goToPreviousStep, restartSteps } = useManageGameStep();
   const { hints, setHintUsed, resetHints, selectHint, selectedHint } = useManageHints();
 
-  const gameHasStarted = currentStep > 0;
+  const gameHasStarted = currentStep > GAME_STEPS.CATEGORY_SELECTION;
 
   const verifyGuess = (guess: string) => {
     if (guess === gameTarget) {
@@ -39,6 +39,17 @@ export default function Game() {
     restartSteps();
   }
 
+  const handleCategorySelection = (category: GameCategory) => {
+    setGameCategory(category);
+    goToNextStep();
+  }
+
+  const handleHintSelection = async (id: number) => {
+    await setHintUsed(id);
+    selectHint(id);
+    goToNextStep();
+  }
+
   useEffect(() => {
     if (gameHasStarted && gameCategory) {
       if (!gameTarget) {
@@ -51,22 +62,13 @@ export default function Game() {
     switch (currentStep) {
       case GAME_STEPS.CATEGORY_SELECTION:
         return (
-          <CategorySelectionStep
-            onSetCategory={(category) => {
-              setGameCategory(category);
-              goToNextStep();
-            }}
-          />
+          <CategorySelectionStep onSetCategory={handleCategorySelection} />
         );
       case GAME_STEPS.HINT_SELECTION:
         return (
           <HintSelectionStep
             hints={hints}
-            onSelectHint={async (id) => {
-              await setHintUsed(id);
-              selectHint(id);
-              goToNextStep();
-            }}
+            onSelectHint={handleHintSelection}
             onOutOfHints={() => goToNextStep(GAME_STEPS.GAME_OVER)}
             gameCategory={gameCategory!}
             onRestart={restartGame}
