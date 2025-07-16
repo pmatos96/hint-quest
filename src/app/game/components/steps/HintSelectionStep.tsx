@@ -43,7 +43,6 @@ interface IHintSelectionStep {
 const HintSelectionStep = ({ gameCategory, onRestart, hints, onSelectHint, onOutOfHints }: IHintSelectionStep) => {
 
   useEffect(() => {
-    console.log("Hints updated:", hints);
     if (hints.every(hint => hint.isUsed)) {
       onOutOfHints();
     }

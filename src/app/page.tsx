@@ -7,9 +7,10 @@ import { IconButton, Input, Stack } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import useGameData from "@/hooks/useGameData";
 import React from "react";
+import usePlayersData from "@/hooks/usePlayersData";
 
 export default function Home() {
-  const { players: storedPlayers, setPlayersList } = useGameData();
+  const { players: storedPlayers, setPlayersList } = usePlayersData();
 
   const initialPlayersState = storedPlayers?.length === 0 ? [{ name: "Player 1", id: 1 }] : storedPlayers;
 

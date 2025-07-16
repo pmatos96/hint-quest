@@ -40,7 +40,7 @@ export default function Game() {
   }
 
   useEffect(() => {
-    if (gameHasStarted) {
+    if (gameHasStarted && gameCategory) {
       if (!gameTarget) {
         fetchGameTarget(gameCategory);
       }
@@ -68,7 +68,7 @@ export default function Game() {
               goToNextStep();
             }}
             onOutOfHints={() => goToNextStep(GAME_STEPS.GAME_OVER)}
-            gameCategory={gameCategory}
+            gameCategory={gameCategory!}
             onRestart={restartGame}
           />
         );

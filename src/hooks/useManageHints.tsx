@@ -8,9 +8,18 @@ export interface IHint {
   isUsed: boolean;
 }
 
+interface IUseManageHints {
+  hints: IHint[];
+  setHints: (hints: IHint[]) => void;
+  setHintUsed: (id: number) => void;
+  resetHints: () => void;
+  selectHint: (id: number) => void;
+  selectedHint: IHint | null;
+}
+
 const defaultHints = defaultHintsMock; // TODO - Remove this once the API is ready
 
-const useManageHints = () => {
+const useManageHints = (): IUseManageHints => {
   const [hints, setHints] = useState<IHint[]>(() => {
     const storedHints = localStorage.getItem("hints");
     return storedHints ? JSON.parse(storedHints) : [];
