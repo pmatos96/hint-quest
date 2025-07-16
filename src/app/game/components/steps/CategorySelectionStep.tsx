@@ -7,7 +7,7 @@ import SpellcheckIcon from "@mui/icons-material/Spellcheck";
 import MovieIcon from "@mui/icons-material/Movie";
 import PetsIcon from "@mui/icons-material/Pets";
 import FlagIcon from "@mui/icons-material/Flag";
-import { GameCategory } from "@/hooks/useManageLocalStorage";
+import { GameCategory } from "@/hooks/useGameData";
 import { Stack } from "@mui/material";
 
 const GAME_CATEGORIES_MAP: Record<GameCategory, { label: string; icon: React.ReactNode }> = {

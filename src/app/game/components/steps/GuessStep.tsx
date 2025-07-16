@@ -3,10 +3,10 @@ import { useState } from "react";
 
 interface IGuessStepProps {
   hintText: string;
-  closeHint: () => void;
+  onSubmitGuess: (guess: string) => void;
 }
 
-const GuessStep = ({ hintText, closeHint }: IGuessStepProps) => {
+const GuessStep = ({ hintText, onSubmitGuess }: IGuessStepProps) => {
   const [guess, setGuess] = useState<string>("");
   const handleGuessChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGuess(event.target.value);
@@ -18,7 +18,7 @@ const GuessStep = ({ hintText, closeHint }: IGuessStepProps) => {
         {hintText}
       </Typography>
       <TextField value={guess} onChange={handleGuessChange} />
-      <Button variant="contained" color="success" onClick={closeHint}>
+      <Button disabled={guess === ""} variant="contained" color="success" onClick={() => onSubmitGuess(guess)}>
         Submit Guess
       </Button>
     </Paper>

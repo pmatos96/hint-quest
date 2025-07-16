@@ -3,7 +3,7 @@ import SpellcheckIcon from "@mui/icons-material/Spellcheck";
 import MovieIcon from "@mui/icons-material/Movie";
 import PetsIcon from "@mui/icons-material/Pets";
 import FlagIcon from "@mui/icons-material/Flag";
-import { GameCategory } from "@/hooks/useManageLocalStorage";
+import { GameCategory } from "@/hooks/useGameData";
 import { Box, Button } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import useManageHints, { IHint } from "@/hooks/useManageHints";
@@ -52,7 +52,7 @@ const HintSelectionStep = ({ gameCategory, onRestart, hints, onSelectHint }: IHi
       <Box display="flex" justifyContent="center" width={"100%"}>
         <Grid width={320} container rowSpacing={2} columnSpacing={2}>
           {hints.map((hint, index) => (
-            <Grid>
+            <Grid key={hint.id}>
               <Button
                 disabled={hint.isUsed}
                 variant="contained"

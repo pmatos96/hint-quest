@@ -10,7 +10,24 @@ type PlayerList = Player[];
 
 export type GameCategory = "famousPerson" | "word" | "movie" | "animal" | "country";
 
-const useManageLocalStorage = () => {
+const useGameData = () => {
+  const [gameTarget, setGameTarget] = useState<string | null>(() => {
+    const storedTarget = localStorage.getItem("gameTarget");
+    return storedTarget ? JSON.parse(storedTarget) : null;
+  });
+
+  const fetchGameTarget = async (category: GameCategory) => {
+    const response = await fetch("/api/generate-target", {
+      method: "POST",
+      body: JSON.stringify({ category }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => res.json());
+    const target = response.target as string;
+    setGameTarget(target);
+  };
+
   const [players, setPlayers] = useState<PlayerList>(() => {
     const storedPlayers = localStorage.getItem("players");
     return storedPlayers ? JSON.parse(storedPlayers) : [];
@@ -57,6 +74,9 @@ const useManageLocalStorage = () => {
   return {
     players,
     addPlayer,
+    gameTarget,
+    setGameTarget,
+    fetchGameTarget,
     removePlayer,
     clearPlayers,
     setPlayersList,
@@ -66,4 +86,4 @@ const useManageLocalStorage = () => {
   };
 };
 
-export default useManageLocalStorage;
+export default useGameData;

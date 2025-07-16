@@ -5,11 +5,11 @@ import Link from "next/link";
 import Button from "@mui/material/Button";
 import { IconButton, Input, Stack } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
-import useManageLocalStorage from "@/hooks/useManageLocalStorage";
+import useGameData from "@/hooks/useGameData";
 import React from "react";
 
 export default function Home() {
-  const { players: storedPlayers, setPlayersList } = useManageLocalStorage();
+  const { players: storedPlayers, setPlayersList } = useGameData();
 
   const initialPlayersState = storedPlayers?.length === 0 ? [{ name: "Player 1", id: 1 }] : storedPlayers;
 
