@@ -4,7 +4,7 @@ import MovieIcon from "@mui/icons-material/Movie";
 import PetsIcon from "@mui/icons-material/Pets";
 import FlagIcon from "@mui/icons-material/Flag";
 import { GameCategory } from "@/hooks/useGameData";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { IHint } from "@/hooks/useManageHints";
 import { useEffect } from "react";
@@ -49,25 +49,29 @@ const HintSelectionStep = ({ gameCategory, onRestart, hints, onSelectHint, onOut
   }, [hints, onOutOfHints]);
 
   return (
-    <>
+    <Stack width={320} margin="auto" spacing={2} alignItems="center">
+      <Typography variant="h6" color="primary">Choose a hint and guess the: </Typography>
       <Button
         variant="contained"
-        color="secondary"
+        color="primary"
         disabled
         startIcon={GAME_CATEGORIES_MAP[gameCategory as GameCategory].icon}
+        fullWidth
+        sx={{ borderRadius: 8}}
       >
         {GAME_CATEGORIES_MAP[gameCategory as GameCategory].label}
       </Button>
       <Box display="flex" justifyContent="center" width={"100%"}>
-        <Grid width={320} container rowSpacing={2} columnSpacing={2}>
+        <Grid width={320} container justifyContent="center" rowSpacing={2} columnSpacing={2}>
           {hints.map((hint, index) => (
             <Grid key={hint.id}>
               <Button
                 disabled={hint.isUsed}
                 variant="contained"
-                color="secondary"
+                color="info"
                 key={hint.id}
                 onClick={() => onSelectHint(hint.id)}
+                sx={{ borderRadius: 8 }}
               >
                 {index + 1}
               </Button>
@@ -75,10 +79,10 @@ const HintSelectionStep = ({ gameCategory, onRestart, hints, onSelectHint, onOut
           ))}
         </Grid>
       </Box>
-      <Button variant="contained" color="secondary" onClick={onRestart}>
+      <Button fullWidth variant="contained" color="primary" onClick={onRestart} sx={{ borderRadius: 8}}>
         Restart
       </Button>
-    </>
+    </Stack>
   );
 };
 
