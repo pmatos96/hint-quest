@@ -76,7 +76,7 @@ export default function Game() {
           />
         );
       case GAME_STEPS.GUESS:
-        return <GuessStep onSubmitGuess={verifyGuess} hintText={selectedHint?.hint || ''} />;
+        return <GuessStep hintNumber={selectedHint?.id || 0} onSubmitGuess={verifyGuess} hintText={selectedHint?.hint || ''} />;
       case GAME_STEPS.WINNER:
         return <WinnerStep onRestart={restartGame} />;
       case GAME_STEPS.GAME_OVER:
