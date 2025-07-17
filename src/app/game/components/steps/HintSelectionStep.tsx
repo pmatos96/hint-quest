@@ -50,7 +50,7 @@ const HintSelectionStep = ({ gameCategory, onRestart, hints, onSelectHint, onOut
 
   return (
     <Stack width={320} margin="auto" spacing={2} alignItems="center">
-      <Typography variant="h6" color="primary">Choose a hint and guess the: </Typography>
+      <Typography variant="h6" color="textSecondary">Choose a hint and guess the: </Typography>
       <Button
         variant="contained"
         color="primary"

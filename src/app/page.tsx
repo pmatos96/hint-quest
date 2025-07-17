@@ -1,11 +1,9 @@
 "use client";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Link from "next/link";
 import Button from "@mui/material/Button";
 import { IconButton, Input, Stack } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
-import useGameData from "@/hooks/useGameData";
 import React from "react";
 import usePlayersData from "@/hooks/usePlayersData";
 

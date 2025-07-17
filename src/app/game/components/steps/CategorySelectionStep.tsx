@@ -40,7 +40,7 @@ interface ICategorySelectionStepProps {
 const CategorySelectionStep = ({ onSetCategory }: ICategorySelectionStepProps) => {
   return (
     <Stack>
-      <Typography textAlign="center" variant="h1" fontWeight="800" color="primary" mb={10} sx={{
+      <Typography textAlign="center" variant="h1" fontWeight="800" color="textPrimary" mb={10} sx={{
           fontSize: {
             xs: "2.5rem",
             md: "5rem",
