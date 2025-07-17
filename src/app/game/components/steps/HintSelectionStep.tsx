@@ -6,7 +6,7 @@ import FlagIcon from "@mui/icons-material/Flag";
 import { GameCategory } from "@/hooks/useGameData";
 import { Box, Button } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import useManageHints, { IHint } from "@/hooks/useManageHints";
+import { IHint } from "@/hooks/useManageHints";
 import { useEffect } from "react";
 
 const GAME_CATEGORIES_MAP: Record<GameCategory, { label: string; icon: React.ReactNode }> = {

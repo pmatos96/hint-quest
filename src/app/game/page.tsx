@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import useGameData, { GameCategory } from "@/hooks/useGameData";
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import useManageGameStep from "@/hooks/useManageGameStep";
 import CategorySelectionStep from "./components/steps/CategorySelectionStep";
 import HintSelectionStep from "./components/steps/HintSelectionStep";
@@ -56,6 +56,7 @@ export default function Game() {
         fetchGameTarget(gameCategory);
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameHasStarted]);
 
   const renderStep = () => {
@@ -75,7 +76,7 @@ export default function Game() {
           />
         );
       case GAME_STEPS.GUESS:
-        return <GuessStep onSubmitGuess={verifyGuess} hintText={selectedHint?.hint!} />;
+        return <GuessStep onSubmitGuess={verifyGuess} hintText={selectedHint?.hint || ''} />;
       case GAME_STEPS.WINNER:
         return <WinnerStep onRestart={restartGame} />;
       case GAME_STEPS.GAME_OVER:
@@ -86,9 +87,17 @@ export default function Game() {
   };
 
   return (
-    <Stack width="100%">
-      <h1>{gameTarget}</h1>
-      {renderStep()}
+    <Stack width="100vw" height="100vh" alignItems={"center"} justifyContent="center">
+      <Box 
+        sx={{
+          width: {
+            xs: '100%',
+            md: '75%',
+          },
+        }} 
+      >
+          {renderStep()}
+      </Box>
     </Stack>
   );
 }

@@ -39,11 +39,52 @@ interface ICategorySelectionStepProps {
 
 const CategorySelectionStep = ({ onSetCategory }: ICategorySelectionStepProps) => {
   return (
-    <Stack width="100%">
-      <Typography variant="h1" fontWeight="bold" color="secondary">
+    <Stack>
+      <Typography textAlign="center" variant="h1" fontWeight="800" color="primary" mb={10} sx={{
+          fontSize: {
+            xs: "2.5rem",
+            md: "5rem",
+          },
+        }}
+      >
         Select a category
       </Typography>
-      <ButtonGroup variant="contained" color="secondary" size="large">
+      <ButtonGroup 
+        orientation="horizontal" 
+        variant="contained" 
+        color="primary" 
+        size="large" 
+        sx={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          boxShadow: 0, 
+          flexDirection: {
+            xs: "column",
+            md: "row",
+          },
+          gap: {
+            xs: 0.5,
+            md: 0,
+          },
+          px: 2,
+          '.MuiButton-root': (theme) => ({
+            [`${theme.breakpoints.down('md')}`]: {
+              borderRadius: 8,
+            },
+            [`${theme.breakpoints.up('md')}`]: {
+              borderRadius: 0,
+              '&:first-of-type': {
+                borderTopLeftRadius: 8,
+                borderBottomLeftRadius: 8,
+              },
+              '&:last-of-type': {
+                borderTopRightRadius: 8,
+                borderBottomRightRadius: 8,
+              }
+            }
+          })
+        }}
+      >
         {Object.entries(GAME_CATEGORIES_MAP).map(([key, { label, icon }]) => (
           <Button key={key} startIcon={icon} onClick={() => onSetCategory(key as GameCategory)}>
             {label}
